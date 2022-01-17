@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  app:
+    build: ./.docker/node
+    container_name: app-nginx-node
+    entrypoint: wait-for db:3306 -t 40 -- /usr/local/bin/docker-entrypoint.sh
+    tty: true
+    ports:
+      - 3000:3000
+    restart: always
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - db
+    networks:
+      - nginx-node
+
+  db:
+    image: mysql:5.7.36
+    container_name: db-nginx-node
+    command: --innodb-use-native-aio=0
+    volumes:
+      - ./.docker/mysql/data:/var/lib/mysql
+    tty: true
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nginx-node
+    networks:
+      - nginx-node
+
+  nginx:
+    build: ./.docker/nginx
+    container_name: nginx-nginx-node
+    tty: true
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - app
+    networks:
+      - nginx-node
+
+networks:
+  nginx-node:
+    driver: bridge
+    name: nginx-node

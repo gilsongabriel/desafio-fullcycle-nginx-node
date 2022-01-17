@@ -1,0 +1,16 @@
+{
+  "name": "desafio-nginx-node",
+  "version": "1.0.0",
+  "description": "Desafio Nginx com Node.js - Fullcycle",
+  "repository": "https://github.com/gilsongabriel/desafio-nginx-com-nodejs-fullcycle",
+  "main": "index.js",
+  "author": "Gilson Gabriel<gilson@codemastersolucoes.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "node-dev": "^7.1.0"
+  }
+}
